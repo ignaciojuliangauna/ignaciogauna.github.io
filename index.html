@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mi Currículum</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Arial', sans-serif;
+      background: #111; 
+      color: #fff; 
+      overflow-x: hidden; 
+    }
+
+    #welcome-section {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 50px 20px;
+      height: 100vh;
+    }
+
+    #profile-circle {
+      width: 150px;
+      height: 150px;
+      margin-bottom: 20px;
+      overflow: hidden;
+      border-radius: 50%;
+      box-shadow: 0 0 20px rgba(255, 140, 0, 0.5);
+    }
+
+    #profile-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+
+    @keyframes lightsAnimation {
+      0%, 100% {
+        opacity: 0.5;
+      }
+      50% {
+        opacity: 1;
+      }
+    }
+
+    #welcome-text {
+      font-size: 2em;
+      margin-bottom: 20px;
+      position: relative;
+      z-index: 2;
+    }
+
+    #dynamic-text {
+      display: inline-block;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .typing-bar {
+      width: 2px;
+      height: 1em;
+      background-color: #ff8c00;
+      display: inline-block;
+      animation: blink 1.5s step-end infinite;
+    }
+
+    @keyframes blink {
+      50% {
+        opacity: 0;
+      }
+    }
+
+    #resume-link {
+      display: inline-block;
+      padding: 10px 20px;
+      font-size: 1.5em;
+      background-color: #222;
+      color: #ff8c00;
+      text-decoration: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
+      box-shadow: 0 0 10px rgba(255, 140, 0, 0.8);
+      margin-top: 20px;
+    }
+
+    #resume-link:hover {
+      background-color: #111;
+      box-shadow: 0 0 20px rgba(255, 140, 0, 1);
+    }
+
+    #resume-section {
+      padding: 20px;
+      background-color: #111;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(255, 140, 0, 0.8);
+      margin-top: px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 1s ease, transform 1s ease;
+    }
+
+    .resume-section {
+      margin-bottom: 40px;
+      flex: 1;
+      min-width: 300px;
+      width: 100%;
+      box-shadow: 0 0 10px rgba(255, 140, 0, 0.8)
+    }
+
+    .section-title {
+      font-size: 1.8em; /* Aumenté el tamaño de la fuente */
+      color: #ff8c00;
+      margin-bottom: 10px;
+    }
+
+    .section-content {
+      color: #F2F3F4;
+      font-family:monospace
+    }
+
+    .experience-item,
+    .skill-item,
+    .education-item,
+   {
+      margin-bottom: 10px;
+      font-size:1.2em
+
+    }
+
+    .knowledge-section,
+    .experience-section,
+    .presentation-section,
+    #contact-section {
+      background-color: rgb(40, 40,40 );
+      padding: 20px;
+      border-radius: 10px;
+      width: 100%;
+      font-size:1.8em
+    }
+
+    .separator-line {
+      width: 2px;
+      height: 100%;
+      background-color: #ff8c00;
+      margin: 0 20px;
+    }
+
+    .knowledge-item {
+      display: flex;
+      align-items: center;
+    }
+
+    .knowledge-item p {
+      margin-left: 10px;
+    }
+
+    .knowledge-item::before {
+      content: '';
+      display: inline-block;
+      width: 15px;
+      height: 15px;
+      background-color: #ff8c00;
+      border-radius: 50%;
+      box-shadow: 0 0 10px rgba(255, 140, 0, 0.8);
+      margin-right: 5px;
+    }
+
+    /* Estilos adicionales para el botón de contacto */
+    #contact-link {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #222;
+      color: #ff8c00;
+      padding: 10px 20px;
+      font-size: 1.2em;
+      border-radius: 5px;
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 0 10px rgba(255, 140, 0, 0.8);
+      transition: background-color 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
+      z-index: 1000; /* Asegura que esté sobre otros elementos */
+    }
+
+    #contact-link:hover {
+      background-color: #111;
+      box-shadow: 0 0 20px rgba(255, 140, 0, 1);
+    }
+
+    /* Nueva sección para mostrar la información de contacto */
+    #contact-info-section {
+      position: fixed;
+      bottom: 80px; /* Justo por encima del botón de contacto */
+      right: 20px;
+      background-color: #222;
+      color: #ff8c00;
+      padding: 10px 20px;
+      font-size: 1.2em;
+      border-radius: 5px;
+      cursor: default;
+      box-shadow: 0 0 10px rgba(255, 140, 0, 0.8);
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+      opacity: 0;
+      visibility: hidden;
+      z-index: 1000; /* Asegura que esté sobre otros elementos */
+    }
+
+    #contact-info-section.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* Estilo para el botón dentro de la sección de información de contacto */
+    #close-contact-info {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      color: #ff8c00;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sección de bienvenida -->
+  <section id="welcome-section">
+    <div id="profile-circle">
+      <div id="lights"></div>
+      <img id="profile-image" src="fotonacho.jpg" alt="Foto de Ignacio Gauna">
+    </div>
+    <div id="welcome-text">
+      <p id="dynamic-text"></p>
+    </div>
+    <a id="resume-link" href="#">Ver currículum</a>
+  </section>
+
+  <!-- Sección del currículum -->
+  <section id="resume-section">
+    <!-- Sección de presentación -->
+    <div class="resume-section presentation-section">
+      <div class="section-content">
+        <p>
+Hola Soy Ignacio un joven bonaerense de 20 años y tambien un apasionado programador en desarrollo web y actual trainee en busca de nuevas oportunidades. 
+<div>
+Mi experiencia previa en ventas y atención al cliente me ha proporcionado habilidades valiosas en comunicación y resolución de problemas, las cuales aplico en mi enfoque hacia el desarrollo web.
+</div>
+Desde siempre, la informática ha sido mi fascinación, y encontrar soluciones creativas a través de la programación es lo que más disfruto. Mi deseo de hablar con la gente y aprender constantemente me impulsa a mejorar mis habilidades y mantenerme al tanto de las últimas tendencias tecnológicas.
+debajo podrás explorar más a fondo mi experiencia y habilidades. Estoy emocionado por la posibilidad de contribuir y aprender en un entorno que valore la innovación y el crecimiento continuo.
+<div>Si quieres contactarme no dudes en pulsar el boton de abajo a la derecha para mas información.</div>
+</p>
+      </div>
+    </div> 
+  </section>
+
+    <!-- Sección de experiencia laboral -->
+  
+    <section class="resume-section experience-section">
+      <h2 class="section-title">Experiencia Laboral</h2>
+      <div class="section-content">
+        <div class="experience-item">
+          <h3 class="job-title">Galandro S.A (2023)</h3>
+          <div class="job-description">
+              <div class="knowledge-item">
+            <p>Venta y Asesoría en Tratamientos de Salud. He trabajado como encargado conectando con nuevos clientes para introducirlos a respectivos tratamientos de salud. También mi función era dar seguimiento y asesorar a quienes ya están en tratamiento. Mi enfoque es garantizar una experiencia positiva y satisfactoria en cada etapa del proceso.</p>
+          </div>
+        </div>
+              <div class="experience-item">                   
+          <h3 class="job-title">Almacen Familiar (2022)</h3>
+          <div class="job-description">
+               <div class="knowledge-item">            
+            <p>Atención al Cliente/Reposición. Realicé el manejo de caja, trato con proveedores, y logré mejorar mis habilidades comunicativas, generando un buen ambiente entre los clientes.</p>
+          </div>
+        </div>
+
+        <div class="experience-item">      
+          <h3 class="job-title">Metalúrgica Familiar (2021-2023)</h3>
+          <div class="job-description">
+                <div class="knowledge-item">
+            <p>Encargado de Producción. Mis tareas eran encargarme del orden en general del establecimiento, ya sea limpieza o posicionamiento de los materiales a utilizar. Uso de diferentes tipos de balancines, cortadora de plasma y cilindradoras. Trato con proveedores.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+</section>
+
+     <!-- Sección de habilidades -->
+     <section>
+
+    <div class="resume-section knowledge-section">
+      <h2 class="section-title">Habilidades</h2>
+      <div class="section-content">
+        <div class="knowledge-item">
+          <p>Atencion Al Cliente</p>
+        </div>
+        <div class="knowledge-item">
+          <p>Ventas</p>
+        </div>
+        <div class="knowledge-item">
+          <p>Excel</p>
+        </div>
+        <div class="knowledge-item">
+          <p>Office</p>
+        </div>
+        <div class="knowledge-item">
+          <p>Ingles</p>
+        </div>
+
+        <div class="knowledge-item">
+          <p>HTML5</p>
+        </div>
+        <div class="knowledge-item">
+          <p>JavaScript</p>
+        </div>
+        <div class="knowledge-item">
+          <p>CCSS3</p>
+        </div>
+        <div class="knowledge-item">
+          <p>Node.js</p>
+        </div>
+        <!-- Puedes agregar más items de habilidades -->
+      </div>
+    </div>
+  </section>
+
+<!--section de cursos-->
+
+     <section>
+    <div class="resume-section knowledge-section">
+      <h2 class="section-title">Estudios</h2>
+      <div class="section-content">
+        <div class="knowledge-item">
+          <p>Bachiller en Economia y Administracion (INSITUTO BARRIO MARINA)</p>
+        </div>
+          <div class="knowledge-item">
+         <p>Curso Desarrollo Web (DIGITAL HOUSE)</p>
+      </div>
+    </div>
+  </section>
+
+
+
+
+  <!-- Sección de información de contacto (inicialmente oculta) -->
+  <div id="contact-info-section" class="contact-info-section">
+    <span id="close-contact-info" onclick="toggleContactInfo()">✕</span>
+    <h2 class="section-title">Contáctame</h2>
+    <div class="section-content">
+      <ul>
+        <li>Correo Electrónico: ignaciogauna87@gmail.com</li>
+        <li>Teléfono: 11-2568-8392</li>
+        <!-- Puedes agregar más detalles de contacto -->
+      </ul>
+    </div>
+  </div>
+
+  <!-- Botón de contacto fijo -->
+  <a id="contact-link" href="#" onclick="toggleContactInfo()">Contáctame</a>
+
+  <script>
+    // Texto dinámico
+    const dynamicText = "Hola, soy Ignacio bienvenid@ a mi CV online";
+    const textElement = document.getElementById('dynamic-text');
+    let index = 0;
+
+    function animateText() {
+      const text = dynamicText.slice(0, index);
+      const typingBar = index < dynamicText.length ? '<span class="typing-bar"></span>' : '';
+
+      textElement.innerHTML = `${text}${typingBar}`;
+
+      if (index < dynamicText.length) {
+        index++;
+        setTimeout(animateText, 150);
+      } else {
+        setTimeout(() => {
+          index = 0;
+          animateText();
+        }, 1000);
+      }
+    }
+
+    // Desplazamiento suave al hacer clic en el enlace del currículum
+    document.getElementById('resume-link').addEventListener('click', function(event) {
+      event.preventDefault();
+      document.getElementById('resume-section').scrollIntoView({ behavior: 'smooth' });
+    });
+
+    // Mostrar la sección del currículum al cargar la página
+    window.addEventListener('load', function() {
+      document.getElementById('resume-section').style.opacity = '1';
+      document.getElementById('resume-section').style.transform = 'translateY(0)';
+      animateText(); // Iniciar la animación después de que se cargue la página
+    });
+
+    // Función para mostrar/ocultar la información de contacto
+    function toggleContactInfo() {
+      const contactInfoSection = document.getElementById('contact-info-section');
+      contactInfoSection.classList.toggle('active');
+    }
+  </script>
+
+</body>
+</html>
